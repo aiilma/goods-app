@@ -25,6 +25,8 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - db-data:/var/lib/mysql
+    ports:
+      - "${DB_PORT}:3306"
     restart: always
 
 volumes:
