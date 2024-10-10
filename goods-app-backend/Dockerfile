@@ -10,6 +10,8 @@ COPY . .
 
 RUN npm run build
 
+RUN chown root:root .
+
 EXPOSE 3000
 
 CMD ["npm", "run", "start:dev"]
