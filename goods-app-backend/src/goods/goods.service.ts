@@ -18,7 +18,10 @@ export class GoodsService {
     sort: { field: 'id', order: 'ASC' },
   }): Promise<PartialLoadResponse> {
     const query = this.goodsRepository.createQueryBuilder('goods');
-    const skip = (body.page - 1) * body.limit;
+
+    const page = body.page || 1;
+    const limit = body.limit || 10;
+    const skip = (page - 1) * limit;
 
     if (body.filters) {
       body.filters.forEach((filter) => {
@@ -31,7 +34,7 @@ export class GoodsService {
       query.orderBy(`goods.${body.sort.field}`, body.sort.order);
     }
 
-    const [goods, total] = await query.skip(skip).take(body.limit).getManyAndCount();
+    const [goods, total] = await query.skip(skip).take(limit).getManyAndCount();
 
     return { goods, total };
   }
