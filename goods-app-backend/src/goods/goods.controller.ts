@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { GoodsService } from './goods.service';
-import { PartialGood } from './goods.entity';
+import { Good, PartialGood } from './goods.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -10,6 +10,16 @@ const STORAGE_PATH_WORD = 'storage';
 @Controller('goods')
 export class GoodsController {
   constructor(private goodsService: GoodsService) {
+  }
+
+  @Post()
+  async getPartialList(@Body() body: {
+    page?: number,
+    limit?: number,
+    filters?: any,
+    sort?: any,
+  }): Promise<{ goods: Good[], total: number }> {
+    return await this.goodsService.partialLoad(body);
   }
 
   @Post('create')
