@@ -1,7 +1,10 @@
-export default function Home() {
+import { Button } from 'antd';
+
+export default async function Home() {
   return (
-    <div>
-      yo from the goods app
-    </div>
+    <main>
+      <h1>home</h1>
+      <Button type="primary">Button</Button>
+    </main>
   );
 }
