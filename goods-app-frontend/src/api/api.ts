@@ -1,1 +1,0 @@
-export const apiRoot = `${process.env.NEXT_PUBLIC_NEST_API_ADDRESS}/api`

@@ -23,7 +23,6 @@ services:
     depends_on:
       - nest-app
     environment:
-      - NEXT_PUBLIC_NEST_API_ADDRESS=http://localhost:${NEST_APP_PORT}
       - NEXT_PUBLIC_NEST_CSR_ADDRESS=http://localhost:${NEST_APP_PORT}
       - NEXT_PUBLIC_NEST_SSR_ADDRESS=http://nest-app:3000
 

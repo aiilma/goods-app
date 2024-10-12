@@ -1,8 +1,8 @@
-import { apiRoot } from '@/api/api';
+import { NEST_SSR_API_ADDRESS } from '@/constants/api';
 
 async function getData() {
   try {
-    const response = await fetch(`${apiRoot}/goods`, {
+    const response = await fetch(`${NEST_SSR_API_ADDRESS}/goods`, {
       method: 'POST',
     });
     const data = await response.json();
