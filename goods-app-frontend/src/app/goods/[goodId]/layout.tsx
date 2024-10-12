@@ -14,20 +14,16 @@ export default function GoodLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <ReactQueryClientProvider>
-          <Layout style={{ padding: '20px' }}>
-            <Content style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              {children}
-            </Content>
-          </Layout>
-        </ReactQueryClientProvider>
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <Layout style={{ padding: '20px' }}>
+        <Content style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          {children}
+        </Content>
+      </Layout>
+    </ReactQueryClientProvider>
   );
 }

@@ -11,10 +11,8 @@ export default function GoodsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        {children}
-      </body>
-    </html>
+    <>
+      {children}
+    </>
   );
 }
