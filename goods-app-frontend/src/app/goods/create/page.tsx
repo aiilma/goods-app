@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Form, Input, Layout, notification, Upload, UploadFile } from 'antd';
+import { Button, Form, Input, notification, Upload, UploadFile } from 'antd';
 import { useCreateGoodMutation } from '@/hooks/use-create-good-mutation';
 import { useRouter } from 'next/navigation';
-
-const { Content } = Layout;
+import Card from 'antd/lib/card/Card';
 
 export default function CreateGoodPage() {
   const createGoodMutation = useCreateGoodMutation();
@@ -15,11 +14,11 @@ export default function CreateGoodPage() {
   const handleSubmit = async (values) => {
     try {
       const newGood = {
-        ...values
-      }
+        ...values,
+      };
 
       if (values.photo && values.photo.file) {
-        newGood.photo = values.photo.file
+        newGood.photo = values.photo.file;
       }
 
       const createdGood = await createGoodMutation.mutateAsync(newGood);
@@ -27,56 +26,55 @@ export default function CreateGoodPage() {
         message: 'Товар успешно создан',
       });
 
-      router.push(`/goods/${createdGood.id}`)
+      router.push(`/goods/${createdGood.id}`);
     } catch (error) {
       notification.error({
         message: 'Ошибка создания товара',
       });
     }
-
   };
 
   return (
-    <Layout style={{ padding: '20px' }}>
-      <Content>
-        <h1>Добавить товар</h1>
-        <Form layout="vertical" onFinish={handleSubmit} >
-          <Form.Item label="Название" name="name">
-            <Input/>
-          </Form.Item>
-          <Form.Item label="Описание" name="description">
-            <Input.TextArea/>
-          </Form.Item>
-          <Form.Item label="Цена" name="price">
-            <Input type="number"/>
-          </Form.Item>
-          <Form.Item label="Цена со скидкой" name="discountPrice">
-            <Input type="number"/>
-          </Form.Item>
-          <Form.Item label="Артикул" name="article">
-            <Input/>
-          </Form.Item>
-          <Form.Item label="Фото" name="photo">
-            <Upload
-              multiple={false}
-              maxCount={1}
-              accept="image/*"
-              fileList={fileList}
-              onChange={(info) => {
-                setFileList(info.fileList);
-              }}
-            >
-              <Button>Загрузить фото</Button>
-            </Upload>
-          </Form.Item>
-          <hr />
-          <Form.Item>
-            <Button type="primary" htmlType="submit" disabled={createGoodMutation.isPending}>
-              {createGoodMutation.isPending ? 'Добавление...' : 'Добавить'}
-            </Button>
-          </Form.Item>
-        </Form>
-      </Content>
-    </Layout>
+    <Card title={'Добавить товар'} bordered={false} style={{
+      width: '50%',
+      textAlign: 'center',
+    }}>
+      <Form layout="vertical" onFinish={handleSubmit}>
+        <Form.Item label="Название" name="name">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Описание" name="description">
+          <Input.TextArea />
+        </Form.Item>
+        <Form.Item label="Цена" name="price">
+          <Input type="number" />
+        </Form.Item>
+        <Form.Item label="Цена со скидкой" name="discountPrice">
+          <Input type="number" />
+        </Form.Item>
+        <Form.Item label="Артикул" name="article">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Фото" name="photo" style={{textAlign: 'left'}}>
+          <Upload
+            maxCount={1}
+            accept="image/*"
+            fileList={fileList}
+            listType="picture"
+            onChange={(info) => {
+              setFileList(info.fileList);
+            }}
+          >
+            <Button>Загрузить</Button>
+          </Upload>
+        </Form.Item>
+        <hr />
+        <Form.Item style={{textAlign: 'right'}}>
+          <Button type="primary" htmlType="submit" disabled={createGoodMutation.isPending}>
+            {createGoodMutation.isPending ? 'Добавление...' : 'Добавить'}
+          </Button>
+        </Form.Item>
+      </Form>
+    </Card>
   );
 }
