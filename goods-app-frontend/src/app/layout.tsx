@@ -3,8 +3,8 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 import 'antd/dist/reset.css';
 
 export const metadata: Metadata = {
-  title: "Goods Catalog",
-  description: "Goods Catalog Description",
+  title: "The Goods App",
+  description: "The Goods App Description",
 };
 
 export default function RootLayout({
