@@ -5,7 +5,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import * as fs from 'fs';
 
-const STORAGE_PATH_WORD = 'storage';
+const PUBLIC_STORAGE = 'public/photos';
 
 @Controller('goods')
 export class GoodsController {
@@ -24,16 +24,20 @@ export class GoodsController {
 
   @Post('create')
   @UseInterceptors(FileInterceptor('photo', {
-    dest: `./${STORAGE_PATH_WORD}/`,
+    dest: `./${PUBLIC_STORAGE}/`,
   }))
-  async create(@Body() good: PartialGood, @UploadedFile() photo: Express.Multer.File) {
+  async create(
+    @Body('good') good: string,
+    @UploadedFile() photo: Express.Multer.File
+  ) {
+    const parsedGood: PartialGood = JSON.parse(good)
     const fileUrl = await this.handleFileUpload(photo);
 
     if (fileUrl) {
-      good.photo = fileUrl;
+      parsedGood.photo = fileUrl;
     }
 
-    return await this.goodsService.create(good);
+    return await this.goodsService.create(parsedGood);
   }
 
   @Get(':id')
@@ -44,16 +48,21 @@ export class GoodsController {
 
   @Put(':id')
   @UseInterceptors(FileInterceptor('photo', {
-    dest: `./${STORAGE_PATH_WORD}/`,
+    dest: `./${PUBLIC_STORAGE}/`,
   }))
-  async update(@Param('id') id: number, @Body() updateGood: PartialGood, @UploadedFile() photo: Express.Multer.File) {
+  async update(
+    @Param('id') id: number,
+    @Body('good') updateGood: string,
+    @UploadedFile() photo: Express.Multer.File
+  ) {
+    const parsedGood: PartialGood = JSON.parse(updateGood)
     const fileUrl = await this.handleFileUpload(photo);
 
     if (fileUrl) {
-      updateGood.photo = fileUrl;
+      parsedGood.photo = fileUrl;
     }
 
-    return await this.goodsService.update(id, updateGood);
+    return await this.goodsService.update(id, parsedGood);
   }
 
   @Delete(':id')
@@ -63,8 +72,8 @@ export class GoodsController {
 
   private async handleFileUpload(file: Express.Multer.File): Promise<string | null> {
     if (file) {
-      const filePath = path.join(`./${STORAGE_PATH_WORD}/`, file.filename);
-      const fileUrl = `/${STORAGE_PATH_WORD}/${file.filename}`;
+      const filePath = path.join(`./${PUBLIC_STORAGE}/`, file.filename);
+      const fileUrl = `${file.filename}`;
 
       fs.renameSync(file.path, filePath);
 
