@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { GoodResponse, GoodWithPartialId } from '@/types/goods';
+import { Good, GoodWithPartialId } from '@/types/goods';
 import { NEST_CSR_API_ADDRESS } from '@/constants/api';
+import { UploadChangeParam } from 'antd/es/upload/interface';
 
 export const apiClient = axios.create({
   baseURL: `${NEST_CSR_API_ADDRESS}`,
@@ -9,19 +10,20 @@ export const apiClient = axios.create({
   },
 });
 
-export const createGood = async (good: GoodWithPartialId): Promise<GoodResponse> => {
-  const { photo, ...restGood } = good;
+export const createGood = async ({ photo, ...good }: GoodWithPartialId<UploadChangeParam>): Promise<Good> => {
+  const photoFile = photo && photo.file;
+
   const formData = new FormData();
 
-  if (photo && photo.originFileObj) {
-    const file = new File([photo.originFileObj], photo.name, {
-      type: photo.type,
+  if (photoFile && photoFile.originFileObj) {
+    const file = new File([photoFile.originFileObj], photoFile.name, {
+      type: photoFile.type,
     });
 
     formData.append('photo', file);
   }
 
-  formData.append('good', JSON.stringify(restGood));
+  formData.append('good', JSON.stringify(good));
 
   const response = await apiClient.post('/goods/create', formData, {
     headers: {

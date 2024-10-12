@@ -1,25 +1,13 @@
-import { UploadFile } from 'antd';
-
-export type Good = {
+export type Good<P = string | null> = {
   id: number;
   name: string;
   description: string;
   price: number;
   discountPrice: number;
   article: string;
-  photo: UploadFile | null;
+  photo: P;
 }
 
-export type GoodResponse = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  discountPrice: number;
-  article: string;
-  photo: string | null;
-}
-
-export type GoodWithPartialId = Omit<Good, 'id'> & { id?: number };
+export type GoodWithPartialId<P = string | null> = Omit<Good<P>, 'id'> & { id?: number };
 
 export type Goods = Good[]
