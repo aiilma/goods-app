@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
+import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider';
 
 export const metadata: Metadata = {
   title: 'Good',
@@ -15,15 +16,17 @@ export default function GoodLayout({
   return (
     <html lang="en">
       <body>
-      <Layout style={{ padding: '20px' }}>
-        <Content style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          {children}
-        </Content>
-      </Layout>
+        <ReactQueryClientProvider>
+          <Layout style={{ padding: '20px' }}>
+            <Content style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              {children}
+            </Content>
+          </Layout>
+        </ReactQueryClientProvider>
       </body>
     </html>
   );

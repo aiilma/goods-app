@@ -31,3 +31,8 @@ export const createGood = async (good: GoodWithPartialId): Promise<GoodResponse>
 
   return response.data;
 };
+
+export const deleteGood = async (id) => {
+  const response = await apiClient.delete(`/goods/${id}`);
+  return response.data;
+};

@@ -4,7 +4,7 @@ import { NEST_CSR_PHOTOS_ADDRESS } from '@/constants/api';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import Card from 'antd/lib/card/Card';
 import Image from 'antd/lib/image';
-import { Button } from 'antd';
+import GoodActions from '@/components/GoodActions';
 
 export default async function GoodPage({ params }: {
   params: {
@@ -19,13 +19,7 @@ export default async function GoodPage({ params }: {
       width: '50%',
       textAlign: 'center',
     }}>
-      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
-        <Button type="primary">В каталог</Button>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button style={{ marginLeft: 8 }}>Редактировать</Button>
-          <Button style={{ marginLeft: 8 }}>Удалить</Button>
-        </div>
-      </div>
+      <GoodActions goodId={good.id} />
       {good.photo && (
         <Image
           src={`${NEST_CSR_PHOTOS_ADDRESS}/${good.photo}`}
