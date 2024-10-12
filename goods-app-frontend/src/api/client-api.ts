@@ -38,3 +38,27 @@ export const deleteGood = async (id) => {
   const response = await apiClient.delete(`/goods/${id}`);
   return response.data;
 };
+
+export const updateGood = async ({ photo, ...good }: Good<UploadChangeParam>) => {
+  const photoFile = photo && photo.file;
+
+  const formData = new FormData();
+
+  if (photoFile && photoFile.originFileObj) {
+    const file = new File([photoFile.originFileObj], photoFile.name, {
+      type: photoFile.type,
+    });
+
+    formData.append('photo', file);
+  }
+
+  formData.append('good', JSON.stringify(good));
+
+  const response = await apiClient.put(`/goods/${good.id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return response.data;
+};
