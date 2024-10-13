@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider';
 
 export const metadata: Metadata = {
   title: "Goods Catalog",
@@ -11,8 +12,8 @@ export default function GoodsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <ReactQueryClientProvider>
       {children}
-    </>
+    </ReactQueryClientProvider>
   );
 }
