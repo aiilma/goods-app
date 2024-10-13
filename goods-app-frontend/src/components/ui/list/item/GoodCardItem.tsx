@@ -57,9 +57,7 @@ export default function GoodCardItem(props: GoodCardItemProps) {
         marginBottom: '20px',
       }}
     >
-      {item.photo && (
-        <GoodCardImage src={item.photo} alt={item.name} preview={false} />
-      )}
+      <GoodCardImage src={item.photo} alt={item.name} preview={false} />
       <p className={styles.cardDescription}>{item.description}</p>
       <p className={styles.cardPrice}>
         Цена: {item.price} ₽&nbsp;
