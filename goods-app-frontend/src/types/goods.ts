@@ -11,3 +11,8 @@ export type Good<P = string | null> = {
 export type GoodWithPartialId<P = string | null> = Omit<Good<P>, 'id'> & { id?: number };
 
 export type Goods = Good[]
+
+export type PartialLoadResponse = {
+  goods: Goods;
+  total: number;
+}
