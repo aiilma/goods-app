@@ -1,11 +1,9 @@
 import ListPagination from '@/components/ui/list/pagination/ListPagination';
-import { Col, Row, Space } from 'antd';
+import { Col, Row } from 'antd';
 import { DEFAULT_PARTIAL_LOAD_LIMIT, DEFAULT_PARTIAL_LOAD_PAGE, partialLoad } from '@/api/server-api';
-import Card from 'antd/lib/card/Card';
-import GoodCardImage from '@/components/ui/list/GoodCardImage';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import GoodsPageActions from '@/components/ui/GoodsPageActions';
 import React from 'react';
+import GoodCardItem from '@/components/ui/list/item/GoodCardItem';
 
 export default async function GoodsPage({
                                           searchParams,
@@ -31,41 +29,7 @@ export default async function GoodsPage({
             <Row gutter={24} justify="start">
               {data.goods.map((item, index) => (
                 <Col key={index} xs={24} sm={12} md={8} lg={8} xl={8}>
-                  <Card
-                    title={
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <h2 style={{ fontSize: 18, fontWeight: 600, margin: 0 }}>{item.name}</h2>
-                      </div>
-                    }
-                    bordered={false}
-                    style={{
-                      width: '100%',
-                      textAlign: 'center',
-                      backgroundColor: '#f9f9f9',
-                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                      padding: '20px 20px 5px',
-                      borderRadius: '10px',
-                      marginBottom: '20px',
-                    }}
-                  >
-                    {item.photo && (
-                      <GoodCardImage src={item.photo} alt={item.name} preview={false} />
-                    )}
-                    <p style={{ fontSize: 14, color: '#666' }}>{item.description}</p>
-                    <p style={{ fontSize: 16, color: '#333' }}>
-                      Цена: {item.price} ₽&nbsp;
-                      {item.discountPrice && (
-                        <span style={{ color: '#f00', fontSize: 14 }}>
-                      (скидка: {item.discountPrice} ₽)
-                    </span>
-                      )}
-                    </p>
-                    <p style={{ fontSize: 14, color: '#666' }}>Артикул: {item.article}</p>
-                    <Space size="middle" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10 }}>
-                      <EditOutlined style={{ fontSize: 18, cursor: 'pointer' }} />
-                      <DeleteOutlined style={{ fontSize: 18, cursor: 'pointer' }} />
-                    </Space>
-                  </Card>
+                  <GoodCardItem item={item} />
                 </Col>
               ))}
             </Row>
