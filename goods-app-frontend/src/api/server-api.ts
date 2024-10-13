@@ -9,7 +9,7 @@ export const fetchGood = async (goodId: string): Promise<Good> => {
 };
 
 export const DEFAULT_PARTIAL_LOAD_PAGE = 1
-export const DEFAULT_PARTIAL_LOAD_LIMIT = 10
+export const DEFAULT_PARTIAL_LOAD_LIMIT = 9
 
 export const partialLoad = async (page = DEFAULT_PARTIAL_LOAD_PAGE, limit = DEFAULT_PARTIAL_LOAD_LIMIT, filters = {}, sort = {}): Promise<PartialLoadResponse> => {
   const response = await fetch(`${NEST_SSR_API_ADDRESS}/goods`, {
