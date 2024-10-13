@@ -1,31 +1,27 @@
-import { NEST_SSR_API_ADDRESS } from '@/constants/api';
+import ListPagination from '@/components/ui/list/pagination/ListPagination';
+import { Col, Row } from 'antd';
+import { DEFAULT_PARTIAL_LOAD_LIMIT, DEFAULT_PARTIAL_LOAD_PAGE, partialLoad } from '@/api/server-api';
 
-async function getData() {
-  try {
-    const response = await fetch(`${NEST_SSR_API_ADDRESS}/goods`, {
-      method: 'POST',
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
-
-export default async function GoodsPage() {
-  const data = await getData();
+export default async function GoodsPage({
+                                          searchParams,
+                                        }: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const page = Number(searchParams?.page ?? DEFAULT_PARTIAL_LOAD_PAGE);
+  const limit = Number(searchParams?.limit ?? DEFAULT_PARTIAL_LOAD_LIMIT);
+  const data = await partialLoad(page, limit);
 
   return (
     <main>
-      <h1>GOODS</h1>
-      <div>
-        {data?.goods.map((good: any) => (
-          <div key={good.id}>
-            <h1>{good.name}</h1>
-          </div>
+      <Row gutter={24}>
+        {data.goods.map((item, index) => (
+          <Col key={index} xs={24} sm={12} md={8} lg={6} xl={4}>
+            {item.name}
+          </Col>
         ))}
-      </div>
+      </Row>
+
+      <ListPagination total={data.total} limit={limit} defaultCurrent={page} />
     </main>
   );
 }
