@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Card from 'antd/lib/card/Card';
 import GoodCardImage from '@/components/ui/list/GoodCardImage';
