@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Card from 'antd/lib/card/Card';
-import GoodCardImage from '@/components/ui/list/GoodCardImage';
+import GoodCardImage from '@/components/ui/list/item/GoodCardImage';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Space, Button, notification } from 'antd';
 import { Good } from '@/types/goods';
