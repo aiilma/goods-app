@@ -10,9 +10,10 @@ type ListPaginationProps = {
   total: number
   limit?: number
   defaultCurrent?: number
+  style?: React.CSSProperties | undefined
 }
 
-export default function ListPagination(props: ListPaginationProps) {
+export default function ListPagination({ style,...props }: ListPaginationProps) {
   const { total, limit, defaultCurrent } = props;
 
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function ListPagination(props: ListPaginationProps) {
 
   const currentPage = defaultCurrent || DEFAULT_PAGE
   const pageSize = limit || DEFAULT_LIMIT
-  const showTotal = (total) => `Всего ${total} товаров`;
+  const showTotal = (total) => `Общее количество: ${total}`;
 
   let isPageSizeChanged = false;
 
@@ -66,6 +67,7 @@ export default function ListPagination(props: ListPaginationProps) {
       defaultCurrent={currentPage}
       onChange={handlePageChange}
       onShowSizeChange={handlePageSizeChange}
+      style={{ ...style }}
     />
   );
 }
