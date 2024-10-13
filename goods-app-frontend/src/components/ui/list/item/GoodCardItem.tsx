@@ -4,9 +4,11 @@ import React from 'react';
 import Card from 'antd/lib/card/Card';
 import GoodCardImage from '@/components/ui/list/GoodCardImage';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Space, Button } from 'antd';
+import { Space, Button, notification } from 'antd';
 import { Good } from '@/types/goods';
 import styles from './styles.module.css';
+import { useDeleteGoodMutation } from '@/hooks/use-delete-good-mutation';
+import { useRouter } from 'next/navigation';
 
 type GoodCardItemProps = {
   item: Good
@@ -14,6 +16,28 @@ type GoodCardItemProps = {
 
 export default function GoodCardItem(props: GoodCardItemProps) {
   const { item } = props;
+  const router = useRouter();
+  const deleteMutation = useDeleteGoodMutation();
+
+  const handleDelete = async () => {
+    try {
+      await deleteMutation.mutateAsync(item.id);
+
+      notification.success({
+        message: 'Товар успешно удален',
+      });
+
+      router.refresh()
+    } catch (error) {
+      notification.error({
+        message: 'Ошибка удаления товара',
+      });
+    }
+  };
+
+  const handleGoToEdit = () => {
+    router.push(`/goods/${item.id}/edit`);
+  };
 
   return (
     <Card
@@ -52,12 +76,14 @@ export default function GoodCardItem(props: GoodCardItemProps) {
           icon={<EditOutlined />}
           className={styles.editButton}
           title={'Редактировать'}
+          onClick={handleGoToEdit}
         />
         <Button
           type="link"
           icon={<DeleteOutlined />}
           className={styles.deleteButton}
           title={'Удалить'}
+          onClick={handleDelete}
         />
       </Space>
     </Card>
