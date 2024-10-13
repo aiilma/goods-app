@@ -23,14 +23,14 @@ export class GoodsService {
     const limit = body.limit || 10;
     const skip = (page - 1) * limit;
 
-    if (body.filters) {
+    if (Array.isArray(body.filters)) {
       body.filters.forEach((filter) => {
         const { operator, value } = parseFilterValue(filter.value);
         query.andWhere(`goods.${filter.field} ${operator} :value`, { value });
       });
     }
 
-    if (body.sort) {
+    if (body.sort && body.sort.field && body.sort.order) {
       query.orderBy(`goods.${body.sort.field}`, body.sort.order);
     }
 

@@ -4,6 +4,7 @@ import { Good, PartialGood } from './goods.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import * as fs from 'fs';
+import { PartialLoadRequest, PartialLoadResponse } from './goods.interface';
 
 const PUBLIC_STORAGE = 'public/photos';
 
@@ -13,12 +14,7 @@ export class GoodsController {
   }
 
   @Post()
-  async getPartialList(@Body() body: {
-    page?: number,
-    limit?: number,
-    filters?: any,
-    sort?: any,
-  }): Promise<{ goods: Good[], total: number }> {
+  async getPartialList(@Body() body: PartialLoadRequest): Promise<PartialLoadResponse> {
     return await this.goodsService.partialLoad(body);
   }
 
