@@ -1,5 +1,5 @@
 import React from 'react';
-import EditGoodForm from '@/components/EditGoodForm';
+import EditGoodForm from '@/components/forms/EditGoodForm';
 import { fetchGood } from '@/api/server-api';
 
 export default async function EditGoodPage({ params }: {
