@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from 'react';
+import React, { useTransition } from 'react';
 import Card from 'antd/lib/card/Card';
 import GoodCardImage from '@/components/ui/list/item/GoodCardImage';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
@@ -9,6 +9,7 @@ import { Good } from '@/types/goods';
 import styles from './styles.module.css';
 import { useDeleteGoodMutation } from '@/hooks/use-delete-good-mutation';
 import { useRouter } from 'next/navigation';
+import FullScreenSpinner from '@/components/ui/FullScreenSpinner';
 
 type GoodCardItemProps = {
   item: Good
@@ -18,6 +19,7 @@ export default function GoodCardItem(props: GoodCardItemProps) {
   const { item } = props;
   const router = useRouter();
   const deleteMutation = useDeleteGoodMutation();
+  const [isPending, startTransition] = useTransition();
 
   const handleDelete = async () => {
     try {
@@ -27,7 +29,7 @@ export default function GoodCardItem(props: GoodCardItemProps) {
         message: 'Товар успешно удален',
       });
 
-      router.refresh()
+      router.refresh();
     } catch (error) {
       notification.error({
         message: 'Ошибка удаления товара',
@@ -36,14 +38,20 @@ export default function GoodCardItem(props: GoodCardItemProps) {
   };
 
   const handleGoToEdit = () => {
-    router.push(`/goods/${item.id}/edit`);
+    startTransition(() => {
+      router.push(`/goods/${item.id}/edit`);
+    });
   };
 
   const handleView = () => {
-    router.push(`/goods/${item.id}`);
+    startTransition(() => {
+      router.push(`/goods/${item.id}`);
+    });
   };
 
   return (
+  <>
+    {(isPending || deleteMutation.isPending) && <FullScreenSpinner />}
     <Card
       title={
         <div className={styles.cardTitle}>
@@ -79,6 +87,7 @@ export default function GoodCardItem(props: GoodCardItemProps) {
           className={styles.viewButton}
           title={'Просмотреть'}
           onClick={handleView}
+          disabled={isPending}
         />
         <Button
           type="link"
@@ -86,6 +95,7 @@ export default function GoodCardItem(props: GoodCardItemProps) {
           className={styles.editButton}
           title={'Редактировать'}
           onClick={handleGoToEdit}
+          disabled={isPending}
         />
         <Button
           type="link"
@@ -93,8 +103,10 @@ export default function GoodCardItem(props: GoodCardItemProps) {
           className={styles.deleteButton}
           title={'Удалить'}
           onClick={handleDelete}
+          disabled={deleteMutation.isPending}
         />
       </Space>
     </Card>
+  </>
   );
 }

@@ -12,7 +12,7 @@ function HoverableLink({ children, href }) {
 
   if (isPending) {
     return (
-      <Spin tip="Loading..." className={styles.spinner} />
+      <Spin className={styles.spinner} />
     );
   }
 

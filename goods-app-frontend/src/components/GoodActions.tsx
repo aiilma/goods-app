@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Button, notification } from 'antd';
+import React, { useTransition } from 'react';
+import { Button, notification, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useDeleteGoodMutation } from '@/hooks/use-delete-good-mutation';
 import { Good } from '@/types/goods';
@@ -14,6 +14,7 @@ export default function GoodActions(props: GoodActionsProps) {
   const { goodId } = props;
   const router = useRouter();
   const deleteMutation = useDeleteGoodMutation();
+  const [isPending, startTransition] = useTransition();
 
   const handleGoBack = () => {
     if (goodId) {
@@ -24,7 +25,9 @@ export default function GoodActions(props: GoodActionsProps) {
   };
 
   const handleGoToEdit = () => {
-    router.push(`/goods/${goodId!}/edit`);
+    startTransition(() => {
+      router.push(`/goods/${goodId!}/edit`);
+    })
   };
 
   const handleDelete = async () => {
@@ -36,6 +39,7 @@ export default function GoodActions(props: GoodActionsProps) {
       });
 
       router.push(`/goods`);
+      router.refresh()
     } catch (error) {
       notification.error({
         message: 'Ошибка удаления товара',
@@ -49,8 +53,10 @@ export default function GoodActions(props: GoodActionsProps) {
       {
         goodId && (<>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button style={{ marginLeft: 8 }} onClick={handleGoToEdit}>Редактировать</Button>
-            <Button style={{ marginLeft: 8 }} onClick={handleDelete} color="danger" variant="solid">
+            <Button style={{ marginLeft: 8 }} onClick={handleGoToEdit} disabled={isPending}>
+              {isPending ? <Spin /> : 'Редактировать'}
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={handleDelete} color="danger" variant="solid" disabled={deleteMutation.isPending}>
               Удалить
             </Button>
           </div>
