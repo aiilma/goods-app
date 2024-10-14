@@ -59,15 +59,17 @@ export default function ListPagination({ style,...props }: ListPaginationProps) 
     router.push(`${pathname}?${newSearchParams.toString()}`);
   };
 
-  return (
-    <Pagination
-      total={total}
-      showTotal={showTotal}
-      defaultPageSize={pageSize}
-      defaultCurrent={currentPage}
-      onChange={handlePageChange}
-      onShowSizeChange={handlePageSizeChange}
-      style={{ ...style }}
-    />
-  );
+  return (<>
+    {total > pageSize && (
+      <Pagination
+        total={total}
+        showTotal={showTotal}
+        defaultPageSize={pageSize}
+        defaultCurrent={currentPage}
+        onChange={handlePageChange}
+        onShowSizeChange={handlePageSizeChange}
+        style={{ ...style }}
+      />
+    )}
+  </>);
 }
