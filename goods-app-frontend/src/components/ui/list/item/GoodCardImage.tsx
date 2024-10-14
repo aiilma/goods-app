@@ -1,10 +1,16 @@
 'use client';
 
-import { Image } from 'antd';
+import { Image, ImageProps } from 'antd';
 import { NEST_CSR_PHOTOS_ADDRESS } from '@/constants/api';
 import { useState } from 'react';
 
-export default function GoodCardImage({ src, alt, ...props }) {
+type GoodCardImageProps = Omit<ImageProps, 'src' | 'alt'> & {
+  src: string | null;
+  alt: string;
+  style?: React.CSSProperties;
+  preview?: boolean;
+}
+export default function GoodCardImage({ src, alt, style, ...props }: GoodCardImageProps) {
   const [isError, setIsError] = useState(false);
 
   const handleError = () => {
@@ -15,11 +21,16 @@ export default function GoodCardImage({ src, alt, ...props }) {
     <div style={{
       minHeight: '150px',
     }}>
-      {src && !isError? (
+      {src && !isError ? (
         <Image
           src={`${NEST_CSR_PHOTOS_ADDRESS}/${src}`}
           alt={alt}
-          style={{ width: '100%', height: '150px', objectFit: 'cover' }}
+          style={{
+            width: '100%',
+            height: '150px',
+            objectFit: 'cover',
+            ...style,
+          }}
           onError={handleError}
           {...props}
         />

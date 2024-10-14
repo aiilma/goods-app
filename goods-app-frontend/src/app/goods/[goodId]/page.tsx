@@ -1,10 +1,9 @@
 import React from 'react';
 import { fetchGood } from '@/api/server-api';
-import { NEST_CSR_PHOTOS_ADDRESS } from '@/constants/api';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import Card from 'antd/lib/card/Card';
-import Image from 'antd/lib/image';
 import GoodActions from '@/components/GoodActions';
+import GoodCardImage from '@/components/ui/list/item/GoodCardImage';
 
 export default async function GoodPage({ params }: {
   params: {
@@ -21,15 +20,15 @@ export default async function GoodPage({ params }: {
     }}>
       <GoodActions goodId={good.id} />
       {good.photo && (
-        <Image
-          src={`${NEST_CSR_PHOTOS_ADDRESS}/${good.photo}`}
+        <GoodCardImage
+          src={good.photo}
           alt={good.name}
+          preview={false}
           style={{
             width: '100%',
             height: 'auto',
             marginBottom: '20px',
           }}
-          preview={false}
         />
       )}
       <Paragraph>{good.description}</Paragraph>
