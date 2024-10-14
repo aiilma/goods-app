@@ -1,5 +1,5 @@
 import { NEST_SSR_API_ADDRESS } from '@/constants/api';
-import { Good, PartialLoadResponse } from '@/types/goods';
+import { Good, PartialLoadRequest, PartialLoadResponse } from '@/types/goods';
 
 export const fetchGood = async (goodId: string): Promise<Good> => {
   const response = await fetch(`${NEST_SSR_API_ADDRESS}/goods/${goodId}`, {
@@ -10,8 +10,14 @@ export const fetchGood = async (goodId: string): Promise<Good> => {
 
 export const DEFAULT_PARTIAL_LOAD_PAGE = 1
 export const DEFAULT_PARTIAL_LOAD_LIMIT = 9
+export const DEFAULT_PARTIAL_LOAD_FILTERS = JSON.stringify([])
 
-export const partialLoad = async (page = DEFAULT_PARTIAL_LOAD_PAGE, limit = DEFAULT_PARTIAL_LOAD_LIMIT, filters = {}, sort = {}): Promise<PartialLoadResponse> => {
+export const partialLoad = async ({
+                                    page = DEFAULT_PARTIAL_LOAD_PAGE,
+                                    limit = DEFAULT_PARTIAL_LOAD_LIMIT,
+                                    filters = [],
+                                    sort = {},
+                                  }: PartialLoadRequest): Promise<PartialLoadResponse> => {
   const response = await fetch(`${NEST_SSR_API_ADDRESS}/goods`, {
     method: 'POST',
     cache: 'no-store',
