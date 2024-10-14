@@ -4,7 +4,10 @@ import { Button, Space } from 'antd';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function GoodsPageActions({ style, ...props }) {
+type GoodsPageActionsProps = {
+  style?: React.CSSProperties | undefined
+}
+export default function GoodsPageActions({ style, ...props }: GoodsPageActionsProps) {
   const router = useRouter();
 
   const handleGoToCreate = () => {
