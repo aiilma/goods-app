@@ -9,7 +9,7 @@ export const fetchGood = async (goodId: string): Promise<Good> => {
 };
 
 export const DEFAULT_PARTIAL_LOAD_PAGE = 1
-export const DEFAULT_PARTIAL_LOAD_LIMIT = 9
+export const DEFAULT_PARTIAL_LOAD_LIMIT = 6
 export const DEFAULT_PARTIAL_LOAD_FILTERS = JSON.stringify([])
 
 export const partialLoad = async ({
