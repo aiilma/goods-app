@@ -2,13 +2,13 @@
 
 import { Button, Col, Form, Input, InputNumber, Row, Select, Slider } from 'antd';
 import React from 'react';
-import { PartialLoadRequest } from '@/types/goods';
+import { PartialLoadRequest, PartialLoadResponse } from '@/types/goods';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const FALLBACK_PRICE_RANGE = [0, 10000];
 
 export type FilterGoodsListFormProps = {
-  availablePriceRange: [number, number];
+  availablePriceRange: PartialLoadResponse['availablePriceRange'];
 };
 
 export default function GoodsListFiltersForm(props: FilterGoodsListFormProps) {
