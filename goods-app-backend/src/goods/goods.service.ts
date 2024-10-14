@@ -24,9 +24,15 @@ export class GoodsService {
     const skip = (page - 1) * limit;
 
     if (Array.isArray(body.filters)) {
-      body.filters.forEach((filter) => {
-        const { operator, value } = parseFilterValue(filter.value);
-        query.andWhere(`goods.${filter.field} ${operator} :value`, { value });
+      const conditions = body.filters.map((filter, index) => {
+        const { operator } = parseFilterValue(filter.value);
+        return `goods.${filter.field} ${operator} :value${index}`;
+      });
+
+      query.where(conditions.join(' AND '));
+      body.filters.forEach((filter, index) => {
+        const { value } = parseFilterValue(filter.value);
+        query.setParameter(`value${index}`, value);
       });
     }
 
