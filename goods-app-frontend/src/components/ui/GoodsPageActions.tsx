@@ -18,7 +18,7 @@ export default function GoodsPageActions({ style, ...props }) {
       style={{ display: 'flex', justifyContent: 'flex-end', ...style }}
       {...props}
     >
-      <Button type="primary" onClick={handleGoToCreate}>Создать</Button>
+      <Button type="primary" onClick={handleGoToCreate}>Создать товар</Button>
     </Space>
   );
 }

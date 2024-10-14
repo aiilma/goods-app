@@ -98,7 +98,7 @@ export default function EditGoodForm({ goodId, initialValues }: EditGoodFormProp
         <hr />
         <Form.Item style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit" disabled={updateGoodMutation.isPending}>
-            {updateGoodMutation.isPending ? 'Редактирование...' : 'Редактировать'}
+            {updateGoodMutation.isPending ? 'Сохранение...' : 'Сохранить'}
           </Button>
         </Form.Item>
       </Form>

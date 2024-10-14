@@ -71,7 +71,7 @@ export default function CreateGoodForm() {
         <hr />
         <Form.Item style={{textAlign: 'right'}}>
           <Button type="primary" htmlType="submit" disabled={createGoodMutation.isPending}>
-            {createGoodMutation.isPending ? 'Добавление...' : 'Добавить'}
+            {createGoodMutation.isPending ? 'Создание...' : 'Создать'}
           </Button>
         </Form.Item>
       </Form>
