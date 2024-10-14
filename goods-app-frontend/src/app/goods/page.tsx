@@ -5,10 +5,9 @@ import {
   DEFAULT_PARTIAL_LOAD_PAGE,
   partialLoad,
 } from '@/api/server-api';
-import GoodsPageActions from '@/components/ui/GoodsPageActions';
 import React from 'react';
 import GoodsList from '@/components/ui/list/GoodsList';
-import GoodsListFiltersForm from '@/components/forms/FilterGoodsListForm/GoodsListFiltersForm';
+import GoodsPageHeader from '@/app/goods/GoodsPageHeader';
 
 export default async function GoodsPage({
                                           searchParams,
@@ -32,8 +31,10 @@ export default async function GoodsPage({
   return (
     <main style={{ padding: '20px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <GoodsListFiltersForm availablePriceRange={data.availablePriceRange} />
-        <GoodsPageActions style={{ marginBottom: '20px' }} />
+        <GoodsPageHeader
+          availablePriceRange={data.availablePriceRange}
+          style={{ marginBottom: '20px' }}
+        />
 
         {
           data.total === 0 || data.goods.length === 0 ? (
