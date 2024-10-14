@@ -1,11 +1,5 @@
-import type { Metadata } from 'next';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
-
-export const metadata: Metadata = {
-  title: 'Good',
-  description: 'Good Description',
-};
 
 export default function GoodLayout({
                                      children,
