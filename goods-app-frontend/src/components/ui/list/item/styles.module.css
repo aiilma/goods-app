@@ -29,7 +29,7 @@
     color: #666;
 }
 
-.editButton, .deleteButton {
+.editButton, .deleteButton, .viewButton {
     font-size: 18px;
     cursor: pointer;
 }
@@ -53,4 +53,8 @@
 
 .deleteButton {
     color: #ff4d4f !important;
+}
+
+.viewButton {
+    color:#faad14 !important;
 }

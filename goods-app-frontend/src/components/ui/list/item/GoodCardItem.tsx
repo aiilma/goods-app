@@ -3,7 +3,7 @@
 import React from 'react';
 import Card from 'antd/lib/card/Card';
 import GoodCardImage from '@/components/ui/list/item/GoodCardImage';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { Space, Button, notification } from 'antd';
 import { Good } from '@/types/goods';
 import styles from './styles.module.css';
@@ -39,6 +39,10 @@ export default function GoodCardItem(props: GoodCardItemProps) {
     router.push(`/goods/${item.id}/edit`);
   };
 
+  const handleView = () => {
+    router.push(`/goods/${item.id}`);
+  };
+
   return (
     <Card
       title={
@@ -68,7 +72,14 @@ export default function GoodCardItem(props: GoodCardItemProps) {
         )}
       </p>
       <p className={styles.cardArticle}>Артикул: {item.article}</p>
-      <Space size="middle" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10 }}>
+      <Space size="small" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10 }}>
+        <Button
+          type="link"
+          icon={<EyeOutlined />}
+          className={styles.viewButton}
+          title={'Просмотреть'}
+          onClick={handleView}
+        />
         <Button
           type="link"
           icon={<EditOutlined />}
