@@ -32,7 +32,7 @@ export default async function GoodsPage({
   return (
     <main style={{ padding: '20px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <GoodsListFiltersForm availablePriceRange={[0, 12000]} />
+        <GoodsListFiltersForm availablePriceRange={data.availablePriceRange} />
         <GoodsPageActions style={{ marginBottom: '20px' }} />
 
         {

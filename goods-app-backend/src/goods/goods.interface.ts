@@ -10,4 +10,5 @@ export interface PartialLoadRequest {
 export interface PartialLoadResponse {
   goods: Good[];
   total: number;
+  availablePriceRange: [number, number];
 }

@@ -42,7 +42,20 @@ export class GoodsService {
 
     const [goods, total] = await query.skip(skip).take(limit).getManyAndCount();
 
-    return { goods, total };
+    const minPrice = await this.goodsRepository.createQueryBuilder('goods')
+      .select('MIN(goods.price)', 'minPrice')
+      .getRawOne();
+
+    const maxPrice = await this.goodsRepository.createQueryBuilder('goods')
+      .select('MAX(goods.price)', 'maxPrice')
+      .getRawOne();
+
+    const availablePriceRange: PartialLoadResponse["availablePriceRange"] = [
+      +minPrice.minPrice,
+      +maxPrice.maxPrice,
+    ];
+
+    return { goods, total, availablePriceRange };
   }
 
   async create(createGood: PartialGood): Promise<Good> {

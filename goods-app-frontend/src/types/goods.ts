@@ -22,4 +22,5 @@ export type PartialLoadRequest = {
 export type PartialLoadResponse = {
   goods: Goods;
   total: number;
+  availablePriceRange: [number, number];
 }
